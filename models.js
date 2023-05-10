@@ -1,7 +1,6 @@
 const { Sequelize, DataTypes } = require('sequelize');
 const sequelize = new Sequelize('sqlite::memory:');
 
-import {DataTypes} from "sequelize";
 const Application = sequelize.define('Application', {
     id: {
         type: DataTypes.INTEGER,
