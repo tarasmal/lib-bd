@@ -16,12 +16,13 @@ const addStudentController = async (req, res) => {
 
 }
 const deleteStudentController = async (req, res) => {
-    const {id} = req.body
+    const {id} = req.query
+    console.log(req)
     try {
-        const student = Student.findByPk(id)
+        const student = await Student.findByPk(id)
         if (student) {
             await Student.destroy({where: {id_student: id}})
-            return res.status(200).json({student})
+            return res.status(200).json(student)
         }
         else {
             return res.status(400).json({message: `Student with id=${id} was not found`})
