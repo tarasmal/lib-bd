@@ -20,6 +20,8 @@ const Application = sequelize.define('Application', {
 
     // If don't want updatedAt
     updatedAt: false,
+    timestamps: false, // Disable automatic timestamps
+    underscored: false,
 
 });
 
@@ -47,6 +49,8 @@ const Book = sequelize.define('Book', {
 
     // If don't want updatedAt
     updatedAt: false,
+    timestamps: false, // Disable automatic timestamps
+    underscored: false,
 });
 const Student = sequelize.define('Student', {
     id_student: {
@@ -68,14 +72,16 @@ const Student = sequelize.define('Student', {
 
     // If don't want updatedAt
     updatedAt: false,
+    timestamps: false, // Disable automatic timestamps
+    underscored: false,
 
 });
 
-Student.hasMany(Application)
-Application.belongsTo(Application)
+Student.hasMany(Application, { foreignKey: 'id_student' });
+Application.belongsTo(Student, { foreignKey: 'id_student' });
 
-Book.hasOne(Application)
-Application.belongsTo(Book)
+Book.hasOne(Application, { foreignKey: 'id_book' });
+Application.belongsTo(Book, { foreignKey: 'id_book' });
 
 module.exports = {Student, Application, Book}
 
