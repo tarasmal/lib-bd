@@ -1,10 +1,11 @@
-const { Sequelize, DataTypes } = require('sequelize');
-const sequelize = new Sequelize('sqlite::memory:');
+const { DataTypes, Sequelize} = require('sequelize');
+const sequelize = require('./db')
 
 const Application = sequelize.define('Application', {
-    id: {
-        type: DataTypes.INTEGER,
+    id_application: {
+        type: DataTypes.STRING(36),
         primaryKey: true,
+        defaultValue: Sequelize.literal('uuid()'),
     },
     return_date: {
         type: DataTypes.STRING
@@ -13,19 +14,26 @@ const Application = sequelize.define('Application', {
         type: DataTypes.STRING
     }
 }, {
+    tableName: "Application",
+    freezeTableName: true,
+    createdAt: false,
+
+    // If don't want updatedAt
+    updatedAt: false,
 
 });
 
 const Book = sequelize.define('Book', {
-    id: {
-        type: DataTypes.INTEGER,
+    id_book: {
+        type: DataTypes.STRING(36),
         primaryKey: true,
+        defaultValue: Sequelize.literal('uuid()')
     },
-    bookTitle: {
+    book_title: {
         type: DataTypes.STRING,
         allowNull: false
     },
-    authorsBook: {
+    authors_book: {
         type: DataTypes.STRING
     },
     year_of_publication: {
@@ -33,21 +41,33 @@ const Book = sequelize.define('Book', {
         allowNull: false
     }
 }, {
+    tableName: "Book",
+    freezeTableName: true,
+    createdAt: false,
 
+    // If don't want updatedAt
+    updatedAt: false,
 });
 const Student = sequelize.define('Student', {
-    id: {
-        type: DataTypes.INTEGER,
+    id_student: {
+        type: DataTypes.STRING(36),
         primaryKey: true,
+        defaultValue: Sequelize.literal('uuid()'),
     },
-    fullName: {
+    full_name: {
         type: DataTypes.STRING,
         allowNull: false
     },
-    countBook: {
+    count_book: {
         type: DataTypes.INTEGER
     }
 }, {
+    tableName: "Student",
+    freezeTableName: true,
+    createdAt: false,
+
+    // If don't want updatedAt
+    updatedAt: false,
 
 });
 
@@ -56,4 +76,6 @@ Application.belongsTo(Application)
 
 Book.hasOne(Application)
 Application.belongsTo(Book)
+
+module.exports = {Student, Application, Book}
 
